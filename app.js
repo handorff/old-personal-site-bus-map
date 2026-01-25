@@ -235,12 +235,13 @@ function startSse() {
   const url = vehiclesUrl();
 
   try {
-    setFooterMode("streaming");
+    setFooterMode("Streaming");
     setFooterStatus("idle");
     sse = new EventSource(url);
 
     sse.onopen = () => setFooterStatus("ok");
     sse.onerror = () => {
+      setFooterMode("Error");
       setFooterStatus("error");
       if (!hadSseData) {
         setTimeout(() => {
@@ -257,6 +258,7 @@ function startSse() {
       try {
         const doc = JSON.parse(evt.data);
         ingestJsonApiDocument(doc);
+        setFooterMode("Streaming");
         setFooterStatus("ok");
         setFooterLast(nowMs());
       } catch {
@@ -266,6 +268,7 @@ function startSse() {
 
     return true;
   } catch {
+    setFooterMode("Error");
     setFooterStatus("error");
     return false;
   }
@@ -287,18 +290,18 @@ async function pollOnce() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const doc = await res.json();
     ingestJsonApiDocument(doc);
-    setFooterMode("polling");
+    setFooterMode("Polling");
     setFooterStatus("ok");
     setFooterLast(nowMs());
   } catch {
-    setFooterMode("polling");
+    setFooterMode("Error");
     setFooterStatus("error");
   }
 }
 
 function startPolling() {
   if (pollTimer) return;
-  setFooterMode("polling");
+  setFooterMode("Polling");
   setFooterStatus("idle");
   pollOnce();
   pollTimer = setInterval(pollOnce, POLL_INTERVAL_MS);
