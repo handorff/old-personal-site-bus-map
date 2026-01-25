@@ -89,7 +89,8 @@ let lastSourceUpdateMs = 0;
 
 // Footer elements (optional)
 const footerMode = document.getElementById("footer-mode");
-const footerStatus = document.getElementById("footer-status");
+const footerStatusText = document.getElementById("footer-status-text");
+const footerStatusDot = document.getElementById("footer-status-dot");
 const footerLast = document.getElementById("footer-last");
 const footerCount = document.getElementById("footer-count");
 
@@ -98,9 +99,8 @@ function setFooterMode(text) {
 }
 
 function setFooterStatus(state, text) {
-  if (!footerStatus) return;
-  footerStatus.textContent = text;
-  footerStatus.dataset.state = state;
+  if (footerStatusText) footerStatusText.textContent = text;
+  if (footerStatusDot) footerStatusDot.dataset.state = state;
 }
 
 function setFooterLast(ts) {

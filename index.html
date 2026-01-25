@@ -72,26 +72,27 @@
   </main>
 
   <footer class="footer">
-    <div class="card subtle">
-      <p class="eyebrow">Live vehicle feed</p>
-      <ul class="footer-metrics">
-        <li>
-          <span class="footer-label">Connection</span>
-          <span id="footer-mode">Polling</span>
-        </li>
-        <li>
-          <span class="footer-label">Status</span>
-          <span id="footer-status" class="footer-status" data-state="idle">Idle</span>
-        </li>
-        <li>
-          <span class="footer-label">Last update</span>
-          <span id="footer-last">--</span>
-        </li>
-        <li>
-          <span class="footer-label">Vehicles shown</span>
-          <span id="footer-count">0</span>
-        </li>
-      </ul>
+    <div class="footer-bar">
+      <span class="footer-title">Live vehicle feed</span>
+      <span class="footer-item">
+        <span class="footer-label">Mode</span>
+        <span id="footer-mode">Polling</span>
+      </span>
+      <span class="footer-item">
+        <span class="footer-label">Status</span>
+        <span class="footer-status">
+          <span id="footer-status-dot" class="footer-status-dot" data-state="idle"></span>
+          <span id="footer-status-text">Idle</span>
+        </span>
+      </span>
+      <span class="footer-item">
+        <span class="footer-label">Last update</span>
+        <span id="footer-last">--</span>
+      </span>
+      <span class="footer-item">
+        <span class="footer-label">Vehicles</span>
+        <span id="footer-count">0</span>
+      </span>
     </div>
   </footer>
 
