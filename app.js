@@ -2,9 +2,10 @@
    Configuration
 ========================= */
 
-const ROUTES = ["1", "66", "77"];
-const MAP_CENTER = [-71.0589, 42.3601];
-const MAP_ZOOM = 12;
+const ROUTES = [
+  "747", "1", "47", "62", "64", "66", "67", "68", "69", "70", "71", "73", "74", "75", "76", "77", "78", "80", "83", "85", "86", "87", "88", "89", "90", "91", "94", "95", "96", "101", "109", "350"];
+const MAP_CENTER = [-71.0990333, 42.3750831];
+const MAP_ZOOM = 13.5;
 
 const OPENFREEMAP_STYLE_URL = "./styles/background.json";
 const MBTA_BASE = "https://api-v3.mbta.com";
@@ -42,9 +43,9 @@ function haversineMeters(lon1, lat1, lon2, lat2) {
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(toRad(lat1)) *
-      Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+    Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
@@ -251,7 +252,7 @@ function stopSse() {
   if (sse) {
     try {
       sse.close();
-    } catch {}
+    } catch { }
     sse = null;
   }
 }
