@@ -163,6 +163,59 @@ h2 {
   font-size: 13px;
 }
 
+.footer-metrics {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.footer-metrics li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.footer-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.footer-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(20, 20, 22, 0.08);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.footer-status[data-state="ok"] {
+  background: rgba(0, 128, 96, 0.14);
+  color: rgba(0, 80, 60, 0.9);
+}
+
+.footer-status[data-state="error"] {
+  background: rgba(200, 40, 40, 0.16);
+  color: rgba(128, 20, 20, 0.95);
+}
+
+.footer-status[data-state="idle"] {
+  background: rgba(20, 20, 22, 0.08);
+  color: rgba(20, 20, 22, 0.7);
+}
+
+@media (min-width: 720px) {
+  .footer-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 /* Ensure MapLibre attribution stays visible */
 .maplibregl-ctrl-bottom-right,
 .maplibregl-ctrl-bottom-left {
