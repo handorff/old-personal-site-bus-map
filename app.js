@@ -89,32 +89,33 @@ let lastSourceUpdateMs = 0;
 
 // Footer elements (optional)
 const footerMode = document.getElementById("footer-mode");
-const footerStatusText = document.getElementById("footer-status-text");
 const footerStatusDot = document.getElementById("footer-status-dot");
 const footerLast = document.getElementById("footer-last");
 const footerCount = document.getElementById("footer-count");
+
+let lastUpdateMs = null;
 
 function setFooterMode(text) {
   if (footerMode) footerMode.textContent = text;
 }
 
-function setFooterStatus(state, text) {
-  if (footerStatusText) footerStatusText.textContent = text;
+function setFooterStatus(state) {
   if (footerStatusDot) footerStatusDot.dataset.state = state;
 }
 
 function setFooterLast(ts) {
   if (!footerLast) return;
-  if (!ts) {
+  lastUpdateMs = ts ?? null;
+}
+
+function updateFooterLastRelative() {
+  if (!footerLast) return;
+  if (!lastUpdateMs) {
     footerLast.textContent = "--";
     return;
   }
-  const time = new Date(ts).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  footerLast.textContent = time;
+  const seconds = Math.max(0, Math.floor((nowMs() - lastUpdateMs) / 1000));
+  footerLast.textContent = `${seconds} seconds ago`;
 }
 
 /* =========================
@@ -234,13 +235,13 @@ function startSse() {
   const url = vehiclesUrl();
 
   try {
-    setFooterMode("Streaming");
-    setFooterStatus("idle", "Connecting");
+    setFooterMode("streaming");
+    setFooterStatus("idle");
     sse = new EventSource(url);
 
-    sse.onopen = () => setFooterStatus("ok", "Streaming");
+    sse.onopen = () => setFooterStatus("ok");
     sse.onerror = () => {
-      setFooterStatus("error", "Stream error");
+      setFooterStatus("error");
       if (!hadSseData) {
         setTimeout(() => {
           if (!hadSseData) {
@@ -256,7 +257,7 @@ function startSse() {
       try {
         const doc = JSON.parse(evt.data);
         ingestJsonApiDocument(doc);
-        setFooterStatus("ok", "Streaming");
+        setFooterStatus("ok");
         setFooterLast(nowMs());
       } catch {
         // ignore
@@ -265,7 +266,7 @@ function startSse() {
 
     return true;
   } catch {
-    setFooterStatus("error", "Streaming unsupported");
+    setFooterStatus("error");
     return false;
   }
 }
@@ -286,19 +287,19 @@ async function pollOnce() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const doc = await res.json();
     ingestJsonApiDocument(doc);
-    setFooterMode("Polling");
-    setFooterStatus("ok", "Polling");
+    setFooterMode("polling");
+    setFooterStatus("ok");
     setFooterLast(nowMs());
   } catch {
-    setFooterMode("Polling");
-    setFooterStatus("error", "Polling error");
+    setFooterMode("polling");
+    setFooterStatus("error");
   }
 }
 
 function startPolling() {
   if (pollTimer) return;
-  setFooterMode("Polling");
-  setFooterStatus("idle", "Starting");
+  setFooterMode("polling");
+  setFooterStatus("idle");
   pollOnce();
   pollTimer = setInterval(pollOnce, POLL_INTERVAL_MS);
 }
@@ -350,6 +351,7 @@ function animateFrame() {
     if (footerCount) footerCount.textContent = String(features.length);
   }
 
+  updateFooterLastRelative();
   requestAnimationFrame(animateFrame);
 }
 
