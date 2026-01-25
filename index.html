@@ -1,8 +1,77 @@
-<html>
-  <head>
-    <title>Paul Handorff</title>
-  </head>
-  <body>
-    Paul Handorff is a product manager in the <a href="https://tid.mbta.com/">MBTA Technology Innovation Department</a>.
-  </body>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Paul Handorff</title>
+
+  <!-- MapLibre GL JS -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <div id="map" aria-hidden="true"></div>
+
+  <main id="content">
+    <header class="hero">
+      <div class="card">
+        <h1>Paul Handorff</h1>
+      </div>
+    </header>
+
+    <section id="" work" class="section">
+      <div class="card">
+        <h2>Work</h2>
+        <p>
+          I am a product manager in the MBTA's <a href="https://tid.mbta.com">Technology Innovation Department</a>,
+          working on <a href="https://www.mbta.com/goapp">MBTA Go</a>.
+        </p>
+        <p>
+          Previously, I worked on the MBTA's <a href="https://www.mbta.com/projects/digital-signage">digital
+            screens</a>.
+          Before that, I was a software engineer at <a href="https://www.edo.com/">EDO</a> and <a
+            href="https://www.quora.com/">Quora</a>.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="card">
+        <h2>Projects</h2>
+
+        <div class="grid">
+          <a class="tile" href="https://nowarriving.store" target="_blank" rel="noreferrer">
+            <h3>Now Arriving</h3>
+            <p>Transit-themed goods, maps, and prints.</p>
+          </a>
+
+          <a class="tile" href="https://paulhandorff.com/transit-plots/" target="_blank" rel="noreferrer">
+            <h3>Transit SVG generator</h3>
+            <p>Generate SVGs of transit routes and stops, suitable for drawing with a pen plotter.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="card">
+        <h2>Contact</h2>
+        <p>
+          My email address is [lastname].[firstname]@gmail.com.
+        </p>
+        <p>
+          <a href="https://github.com/handorff" target="_blank" rel="noreferrer">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/paul-handorff-42701910b/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js" type="module"></script>
+</body>
+
 </html>
