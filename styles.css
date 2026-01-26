@@ -8,16 +8,16 @@ body {
 }
 
 :root {
-  --footer-height: 48px;
+  --status-bar-height: 48px;
 }
 
 /* Background map layer */
 #map {
   position: fixed;
-  top: 0;
+  top: var(--status-bar-height);
   left: 0;
   right: 0;
-  bottom: var(--footer-height);
+  bottom: 0;
   z-index: 0;
 }
 
@@ -40,7 +40,7 @@ body {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding: 48px 18px calc(var(--footer-height) + 24px);
+  padding: calc(var(--status-bar-height) + 32px) 18px 80px;
   color: rgba(20, 20, 22, 0.92);
 }
 
@@ -170,23 +170,23 @@ h2 {
   font-size: 13px;
 }
 
-.footer {
+.status-bar {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
+  top: 0;
   z-index: 3;
   margin: 0;
   pointer-events: auto;
 }
 
-.footer-bar {
+.status-bar-inner {
   width: 100%;
-  min-height: var(--footer-height);
+  min-height: var(--status-bar-height);
   padding: 10px 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   background: #151518;
-  box-shadow: 0 -6px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -242,7 +242,7 @@ h2 {
 }
 
 @media (max-width: 640px) {
-  .footer-bar {
+  .status-bar-inner {
     flex-wrap: wrap;
   }
 }
