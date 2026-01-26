@@ -241,6 +241,43 @@ h2 {
   background: rgba(255, 255, 255, 0.35);
 }
 
+.map-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.map-toggle:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.map-toggle:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.45);
+  outline-offset: 2px;
+}
+
+.map-toggle-icon {
+  font-size: 14px;
+}
+
+.map-toggle-label {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+body.map-only #content {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .status-bar-inner {
     flex-wrap: wrap;
