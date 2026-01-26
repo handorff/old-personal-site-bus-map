@@ -7,10 +7,17 @@ body {
     Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
+:root {
+  --status-bar-height: 38px;
+}
+
 /* Background map layer */
 #map {
   position: fixed;
-  inset: 0;
+  top: var(--status-bar-height);
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 0;
 }
 
@@ -33,7 +40,7 @@ body {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding: 48px 18px 80px;
+  padding: calc(var(--status-bar-height) + 20px) 18px 64px;
   color: rgba(20, 20, 22, 0.92);
 }
 
@@ -161,6 +168,83 @@ h2 {
 .meta {
   opacity: 0.65;
   font-size: 13px;
+}
+
+.status-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+  margin: 0;
+  pointer-events: auto;
+}
+
+.status-bar-inner {
+  width: 100%;
+  min-height: var(--status-bar-height);
+  padding: 6px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(20, 20, 24, 0.92);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: rgba(232, 232, 236, 0.86);
+}
+
+.footer-separator {
+  opacity: 0.3;
+}
+
+.footer-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.footer-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.footer-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+
+.footer-status-dot[data-state="ok"] {
+  background: #2fbf71;
+  box-shadow: 0 0 0 2px rgba(47, 191, 113, 0.35);
+}
+
+.footer-status-dot[data-state="error"] {
+  background: #e34b4b;
+  box-shadow: 0 0 0 2px rgba(227, 75, 75, 0.35);
+}
+
+.footer-status-dot[data-state="idle"] {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+@media (max-width: 640px) {
+  .status-bar-inner {
+    flex-wrap: wrap;
+  }
 }
 
 /* Ensure MapLibre attribution stays visible */

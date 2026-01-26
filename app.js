@@ -88,14 +88,35 @@ const vehicles = new Map();
 let map;
 let lastSourceUpdateMs = 0;
 
-// HUD elements (optional)
-const hudStatus = document.getElementById("hud-status");
-const hudRoutes = document.getElementById("hud-routes");
-const hudCount = document.getElementById("hud-count");
-if (hudRoutes) hudRoutes.textContent = ROUTES.join(", ");
+// Footer elements (optional)
+const footerMode = document.getElementById("footer-mode");
+const footerStatusDot = document.getElementById("footer-status-dot");
+const footerLast = document.getElementById("footer-last");
+const footerCount = document.getElementById("footer-count");
 
-function setStatus(text) {
-  if (hudStatus) hudStatus.textContent = text;
+let lastUpdateMs = null;
+
+function setFooterMode(text) {
+  if (footerMode) footerMode.textContent = text;
+}
+
+function setFooterStatus(state) {
+  if (footerStatusDot) footerStatusDot.dataset.state = state;
+}
+
+function setFooterLast(ts) {
+  if (!footerLast) return;
+  lastUpdateMs = ts ?? null;
+}
+
+function updateFooterLastRelative() {
+  if (!footerLast) return;
+  if (!lastUpdateMs) {
+    footerLast.textContent = "--";
+    return;
+  }
+  const seconds = Math.max(0, Math.floor((nowMs() - lastUpdateMs) / 1000));
+  footerLast.textContent = `${seconds} seconds ago`;
 }
 
 /* =========================
@@ -215,12 +236,14 @@ function startSse() {
   const url = vehiclesUrl();
 
   try {
-    setStatus("connecting (SSE)…");
+    setFooterMode("Streaming");
+    setFooterStatus("idle");
     sse = new EventSource(url);
 
-    sse.onopen = () => setStatus("connected (SSE)");
+    sse.onopen = () => setFooterStatus("ok");
     sse.onerror = () => {
-      setStatus("SSE error (will fallback if needed)");
+      setFooterMode("Error");
+      setFooterStatus("error");
       if (!hadSseData) {
         setTimeout(() => {
           if (!hadSseData) {
@@ -236,6 +259,9 @@ function startSse() {
       try {
         const doc = JSON.parse(evt.data);
         ingestJsonApiDocument(doc);
+        setFooterMode("Streaming");
+        setFooterStatus("ok");
+        setFooterLast(nowMs());
       } catch {
         // ignore
       }
@@ -243,7 +269,8 @@ function startSse() {
 
     return true;
   } catch {
-    setStatus("SSE unsupported; using polling");
+    setFooterMode("Error");
+    setFooterStatus("error");
     return false;
   }
 }
@@ -264,15 +291,19 @@ async function pollOnce() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const doc = await res.json();
     ingestJsonApiDocument(doc);
-    setStatus("connected (polling)");
+    setFooterMode("Polling");
+    setFooterStatus("ok");
+    setFooterLast(nowMs());
   } catch {
-    setStatus("polling error");
+    setFooterMode("Error");
+    setFooterStatus("error");
   }
 }
 
 function startPolling() {
   if (pollTimer) return;
-  setStatus("starting polling…");
+  setFooterMode("Polling");
+  setFooterStatus("idle");
   pollOnce();
   pollTimer = setInterval(pollOnce, POLL_INTERVAL_MS);
 }
@@ -321,9 +352,10 @@ function animateFrame() {
     }
 
     map.getSource("vehicles").setData({ type: "FeatureCollection", features });
-    if (hudCount) hudCount.textContent = String(features.length);
+    if (footerCount) footerCount.textContent = String(features.length);
   }
 
+  updateFooterLastRelative();
   requestAnimationFrame(animateFrame);
 }
 
