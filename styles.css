@@ -44,7 +44,10 @@ body {
   color: rgba(20, 20, 22, 0.92);
   opacity: 1;
   visibility: visible;
-  transition: opacity 200ms ease, visibility 0s linear 0s;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 200ms ease, visibility 0s linear 0s,
+    backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
 }
 
 /* Layout */
@@ -283,7 +286,17 @@ body.map-only #content {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 200ms ease, visibility 0s linear 200ms;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: opacity 200ms ease, visibility 0s linear 200ms,
+    backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #content,
+  body.map-only #content {
+    transition: none;
+  }
 }
 
 @media (max-width: 720px) {
