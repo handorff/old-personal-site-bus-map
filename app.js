@@ -93,6 +93,7 @@ const footerMode = document.getElementById("footer-mode");
 const footerStatusDot = document.getElementById("footer-status-dot");
 const footerLast = document.getElementById("footer-last");
 const footerCount = document.getElementById("footer-count");
+const mapToggle = document.getElementById("map-toggle");
 
 let lastUpdateMs = null;
 
@@ -117,6 +118,25 @@ function updateFooterLastRelative() {
   }
   const seconds = Math.max(0, Math.floor((nowMs() - lastUpdateMs) / 1000));
   footerLast.textContent = `${seconds} seconds ago`;
+}
+
+function setMapOnly(enabled) {
+  document.body.classList.toggle("map-only", enabled);
+
+  if (mapToggle) {
+    mapToggle.setAttribute("aria-pressed", String(enabled));
+    mapToggle.title = enabled ? "Show content" : "Show map";
+    const label = mapToggle.querySelector(".map-toggle-label");
+    if (label) {
+      label.textContent = enabled ? "Content" : "Map";
+    }
+  }
+}
+
+if (mapToggle) {
+  mapToggle.addEventListener("click", () => {
+    setMapOnly(!document.body.classList.contains("map-only"));
+  });
 }
 
 /* =========================
