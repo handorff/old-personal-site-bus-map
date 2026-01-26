@@ -44,7 +44,6 @@ body {
   color: rgba(20, 20, 22, 0.92);
   opacity: 1;
   visibility: visible;
-  transition: opacity 200ms ease, visibility 0s linear 0s;
 }
 
 /* Layout */
@@ -65,8 +64,8 @@ body {
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   padding: 18px 18px;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
 }
 
@@ -83,7 +82,7 @@ body {
 }
 
 h1 {
-  margin: 0 0 8px;
+  margin: 0px;
   font-size: 34px;
   line-height: 1.1;
 }
@@ -284,12 +283,11 @@ body.map-only #content {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 200ms ease, visibility 0s linear 200ms;
 }
 
 body.map-only .card {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 }
 
 @media (prefers-reduced-motion: reduce) {
