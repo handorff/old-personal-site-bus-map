@@ -44,10 +44,7 @@ body {
   color: rgba(20, 20, 22, 0.92);
   opacity: 1;
   visibility: visible;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: opacity 200ms ease, visibility 0s linear 0s,
-    backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
+  transition: opacity 200ms ease, visibility 0s linear 0s;
 }
 
 /* Layout */
@@ -68,8 +65,9 @@ body {
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
   padding: 18px 18px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition: backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
 }
 
 .card.subtle {
@@ -286,15 +284,19 @@ body.map-only #content {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  transition: opacity 200ms ease, visibility 0s linear 200ms,
-    backdrop-filter 200ms ease, -webkit-backdrop-filter 200ms ease;
+  transition: opacity 200ms ease, visibility 0s linear 200ms;
+}
+
+body.map-only .card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 @media (prefers-reduced-motion: reduce) {
   #content,
-  body.map-only #content {
+  body.map-only #content,
+  .card,
+  body.map-only .card {
     transition: none;
   }
 }
